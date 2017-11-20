@@ -36,6 +36,8 @@
     <echo message="        (only applicable in conjunction with target 'checkts')"/>
     <echo message="        resolves time stamp conflicts by updating the local time stamps"/>
     <echo message="        with the current time stamps from the server (default:no)"/>
+    <echo message="    -Dnatural.ant.short.log=yes/no"/>
+    <echo message="        reduces the upload/catalog/stow output to a minimum (default:no)"/>
     <echo message="    -logfile {filename}"/>
     <echo message="        use given file for log"/>
     <echo message=" "/>
@@ -50,7 +52,7 @@
     <property name="natural.ant.repository.password" value="" />
     <property name="natural.ant.project.password.encryption" value="YES" />
     <property name="natural.ant.deploy.exclude.list" value="YES" />
-    <property name="natural.ant.deploy.scope" value="3" />
+    <property name="natural.ant.deploy.scope" value="2" />
     <property name="natural.ant.repository.username" value="" />
     <property name="natural.ant.deploy.timestamp.check" value="NO" />
     <property name="natural.ant.deploy.retain.unchanged.sources" value="NO" />
@@ -83,7 +85,7 @@
     <property name="natural.ant.server.environment" value="127.0.0.1-2700" />
     <property name="natural.ant.server.password" value="" />
     <property name="natural.ant.server.username" value="CI-DEV" />
-    <property name="natural.ant.project.steplib.nsv" value="SYSTEM" />
+    <property name="natural.ant.project.steplib.nsv" value="" />
     <!-- ### ANT_DEPLOY_PROPERTIES_END ###   -->
   </target>
     
@@ -331,6 +333,10 @@
       </antcall>
       <exec executable="svn" failonerror="${natural.ant.failonerror.internal}">
        <arg value="update"/>
+       <arg value="--username"/>
+       <arg value="${natural.ant.repository.username}"/>
+       <arg value="--password"/>
+       <arg value="${internal.natural.ant.repository.password}"/>
        <arg value="${natural.ant.project.rootdir.active}/${natural.ant.project.name}"/>
        <arg value="-r${natural.ant.repository.version}"/>
       </exec>
