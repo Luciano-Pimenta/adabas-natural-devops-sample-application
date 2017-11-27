@@ -69,7 +69,7 @@
     <property name="natural.ant.server.port" value="2800" />
     <property name="natural.ant.project.name" value="NaturalCruise" />
     <property name="natural.ant.server.secured.environment" value="NO" />
-    <property name="natural.ant.project.rootdir" value="C:\TeamCity\buildAgent\work\1935c65b3a20c0bd\" />
+    <property name="natural.ant.project.rootdir" value="C:/TeamCity/buildAgent/work/1935c65b3a20c0bd" />
     <property name="natural.ant.deploy.stow" value="NO" />
     <property name="natural.ant.mapping.enable" value="NO" />
     <property name="natural.ant.project.deploy.file.name" value="natdeploy-devTC.xml" />
