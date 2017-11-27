@@ -65,7 +65,7 @@
     <property name="natural.ant.source.type.selection" value="2736127" />
     <property name="natural.ant.repository.access.method" value=":pserver:" />
     <property name="natural.ant.deploy.upload" value="YES" />
-    <property name="natural.ant.repository.type" value="SVN" />
+    <property name="natural.ant.repository.type" value="GIT" />
     <property name="natural.ant.server.port" value="2800" />
     <property name="natural.ant.project.name" value="NaturalCruise" />
     <property name="natural.ant.server.secured.environment" value="NO" />
