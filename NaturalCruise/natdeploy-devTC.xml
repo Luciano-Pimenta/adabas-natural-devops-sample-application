@@ -3,7 +3,7 @@
         
   <target name="help"
           description="shows a help screen">
-    <!-- display help screen  -->
+    <!-- display help screen -->
     <echo message="ANT Natural deployment utility"/>
     <echo message=" "/>
     <echo message="  This utility performs deployment processing for NaturalONE."/>
@@ -56,7 +56,7 @@
     <property name="natural.ant.repository.username" value="" />
     <property name="natural.ant.deploy.timestamp.check" value="NO" />
     <property name="natural.ant.deploy.retain.unchanged.sources" value="NO" />
-    <property name="natural.ant.deploy.full" value="NO" />
+    <property name="natural.ant.deploy.full" value="YES" />
     <property name="natural.ant.generate.old.data.area.format" value="NO" />
     <property name="natural.ant.library.steplib.nsv" value="" />
     <property name="natural.ant.source.all.types" value="YES" />
