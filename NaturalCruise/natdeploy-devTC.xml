@@ -3,7 +3,7 @@
         
   <target name="help"
           description="shows a help screen">
-    <!-- display help screen -->
+    <!-- display help screen  -->
     <echo message="ANT Natural deployment utility"/>
     <echo message=" "/>
     <echo message="  This utility performs deployment processing for NaturalONE."/>
