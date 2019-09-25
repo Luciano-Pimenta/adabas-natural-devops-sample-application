@@ -32,7 +32,7 @@ INPUT          (     IP=OFF                                           /*
 /
  002T *USER /*.02S008 A008 .
       (AD=OD HE='NCDEMAPH' )
- 024T 'Natural Class - Cruise Planning BRASIL'(U)
+ 024T 'Natural Class - Cruise Planning BRA___'(U)
  071T *TIMX /*.01S008 T    .
       (AD=OD HE='NCDEMAPH' )
 /
