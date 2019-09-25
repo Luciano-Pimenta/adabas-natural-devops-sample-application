@@ -51,6 +51,7 @@
     <property name="natural.ant.server.parameters" value="webio=on parm=NDVDEV" />
     <property name="natural.ant.repository.password" value="" />
     <property name="natural.ant.project.password.encryption" value="YES" />
+    <property name="natural.ant.deploy.create.sysobjh" value="NO" />
     <property name="natural.ant.deploy.exclude.list" value="YES" />
     <property name="natural.ant.deploy.scope" value="2" />
     <property name="natural.ant.repository.username" value="" />
@@ -58,31 +59,41 @@
     <property name="natural.ant.deploy.retain.unchanged.sources" value="NO" />
     <property name="natural.ant.deploy.full" value="NO" />
     <property name="natural.ant.generate.old.data.area.format" value="NO" />
-    <property name="natural.ant.library.steplib.nsv" value="" />
+    <property name="natural.ant.library.steplib.nsv" value="NTCRUISE;!;!" />
     <property name="natural.ant.source.all.types" value="YES" />
+    <property name="natural.ant.deploy.upload.sysobjh" value="NO" />
     <property name="natural.ant.repository.url" value="https://github.com/Luciano-Pimenta/adabas-natural-devops-sample-application.git" />
     <property name="natural.ant.repository.version" value="feature1" />
+    <property name="natural.ant.reference.enable" value="NO" />
     <property name="natural.ant.source.type.selection" value="2736127" />
+    <property name="natural.ant.reference.string" value="" />
     <property name="natural.ant.repository.access.method" value=":pserver:" />
+    <property name="natural.ant.truststore.password" value="" />
     <property name="natural.ant.deploy.upload" value="YES" />
-    <property name="natural.ant.repository.type" value="GIT" />
+    <property name="natural.ant.deploy.scratch" value="NO" />
+    <property name="natural.ant.repository.type" value="SVN" />
     <property name="natural.ant.server.port" value="2700" />
     <property name="natural.ant.project.name" value="NaturalCruise" />
     <property name="natural.ant.server.secured.environment" value="NO" />
     <property name="natural.ant.project.rootdir" value="/var/lib/jenkins/workspace/NatCIDevGIT" />
     <property name="natural.ant.deploy.stow" value="NO" />
+    <property name="natural.ant.deploy.history.log.level" value="0" />
+    <property name="natural.ant.deploy.upload.sysobjh.library" value="WORKPLAN" />
     <property name="natural.ant.mapping.enable" value="NO" />
     <property name="natural.ant.project.deploy.file.name" value="natdeploy-devGIT.xml" />
     <property name="natural.ant.deploy.delete" value="NO" />
     <property name="natural.ant.server.hostname" value="127.0.0.1" />
+    <property name="natural.ant.short.log" value="NO" />
     <property name="natural.ant.mapping.string" value="NTCRUISE=NTCRUISE;" />
     <property name="natural.ant.failonerror" value="YES" />
     <property name="natural.ant.project.steplibs" value="1;SYSEXDDM;" />
     <property name="natural.ant.deploy.catalog.retries" value="1" />
+    <property name="natural.ant.script.one.version" value="9.1.2.0" />
     <property name="natural.ant.repository.module" value="" />
     <property name="natural.ant.deploy.catalog" value="YES" />
-    <property name="natural.ant.library.steplibs" value="" />
+    <property name="natural.ant.library.steplibs" value="NTCRUISE;0;!;!" />
     <property name="natural.ant.server.environment" value="127.0.0.1-2700" />
+    <property name="natural.ant.server.usessl" value="NO" />
     <property name="natural.ant.server.password" value="" />
     <property name="natural.ant.server.username" value="CI-DEV" />
     <property name="natural.ant.project.steplib.nsv" value="" />
@@ -119,6 +130,39 @@
       </or>
     </condition>  
     <property name="natural.ant.tstamp.format" value="HH:mm:ss.SSS"/>
+  	
+    <condition property="is.eclipse.git" value="yes">
+      <and>
+        <isset property="natural.eclipse.running"/>
+      	<isset property="natural.ant.repository.type.git"/>
+      </and>
+    </condition>  
+    <condition property="is.no.eclipse.git" value="yes">
+      <and>
+        <not>
+          <isset property="natural.eclipse.running"/>
+        </not>
+        <isset property="natural.ant.repository.type.git"/>
+      </and>
+    </condition>  
+    <condition property="is.eclipse.no.git" value="yes">
+      <and>
+        <isset property="natural.eclipse.running"/>
+        <not>
+          <isset property="natural.ant.repository.type.git"/>
+        </not>
+      </and>
+    </condition>  
+    <condition property="is.no.eclipse.no.git" value="yes">
+      <and>
+        <not>
+          <isset property="natural.eclipse.running"/>
+        </not>
+      	<not>
+          <isset property="natural.ant.repository.type.git"/>
+        </not>
+      </and>
+    </condition>  
   </target>
   
   
@@ -133,11 +177,25 @@
   </target>
 
       
-  <target name="-setRootdirEclipse" if="natural.eclipse.running">
+  <target name="-setRootdirEclipse" depends="-setRootdirEclipseGit,-setRootdirEclipseNoGit"
+  	        if="natural.eclipse.running">
     <!-- set the rootdir in case of running inside Eclipse -->
-    <property name="natural.ant.project.rootdir.active" value=".."/>
   </target>
 
+	
+  <target name="-setRootdirEclipseGit" if="is.eclipse.git">
+    <!-- set the rootdir in case of running inside Eclipse with Git -->
+    <property name="natural.ant.project.rootdir.active" value=".."/>
+    <property name="natural.ant.project.rootdir.references" value="../.."/>
+  </target>
+	
+	
+  <target name="-setRootdirEclipseNoGit" if="is.eclipse.no.git">
+    <!-- set the rootdir in case of running inside Eclipse without Git -->
+    <property name="natural.ant.project.rootdir.active" value=".."/>
+    <property name="natural.ant.project.rootdir.references" value=".."/>
+  </target>
+	        
     
   <target name="-setRootdirNoEclipse" depends="-setRootdirNoEclipseGit,-setRootdirNoEclipseNoGit" 
   	      unless="natural.eclipse.running">
@@ -145,14 +203,17 @@
   </target>
 	
 	
-  <target name="-setRootdirNoEclipseGit" if="natural.ant.repository.type.git">
+  <target name="-setRootdirNoEclipseGit" if="is.no.eclipse.git">
     <!-- set the rootdir in case of running outside Eclipse with Git -->
     <property name="natural.ant.project.rootdir.active" value="${natural.ant.project.rootdir}/${natural.ant.project.name}"/>
+    <property name="natural.ant.project.rootdir.references" value="${natural.ant.project.rootdir}"/>
   </target>
-    
-  <target name="-setRootdirNoEclipseNoGit" unless="natural.ant.repository.type.git">
+
+	
+  <target name="-setRootdirNoEclipseNoGit" if="is.no.eclipse.no.git">
     <!-- set the rootdir in case of running outside Eclipse without Git -->
     <property name="natural.ant.project.rootdir.active" value="${natural.ant.project.rootdir}"/>
+    <property name="natural.ant.project.rootdir.references" value="${natural.ant.project.rootdir}"/>
   </target>
 	    
     
@@ -170,14 +231,21 @@
     <pathelement location="${natural.eclipse.bundle.location}/com.softwareag.naturalone.natural.ant/bin"/>
     <pathelement location="${natural.eclipse.bundle.location}/com.softwareag.naturalone.natural.ndvserveraccess/bin"/>
     <pathelement location="${natural.eclipse.bundle.location}/com.softwareag.naturalone.natural.auxiliary/bin"/>
+    <pathelement location="${natural.eclipse.bundle.location}/com.softwareag.natural.tools/bin"/>
     <pathelement path="${classpath}"/>
-    <fileset dir="${natural.eclipse.home}">
-      <include name="plugins/com.softwareag.naturalone.natural.ant*.jar"/>
-      <include name="plugins/com.softwareag.naturalone.natural.ndvserveraccess*.jar"/>
-      <include name="plugins/com.softwareag.naturalone.natural.auxiliary*.jar"/>
-      <include name="plugins/com.ibm.icu.charset_4.8.1.jar"/>
-      <include name="plugins/com.ibm.naturalone.icu_4.8.1.jar"/>
-    </fileset>
+  	<sort>
+  	  <reverse xmlns="antlib:org.apache.tools.ant.types.resources.comparators">
+        <date/>
+  	  </reverse>
+      <fileset dir="${natural.eclipse.home}" erroronmissingdir="false">
+        <include name="plugins/com.softwareag.naturalone.natural.ant*.jar"/>
+        <include name="plugins/com.softwareag.naturalone.natural.ndvserveraccess*.jar"/>
+        <include name="plugins/com.softwareag.naturalone.natural.auxiliary*.jar"/>
+        <include name="plugins/com.softwareag.natural.tools*.jar"/>
+        <include name="plugins/com.ibm.icu.charset*.jar"/>
+        <include name="plugins/com.ibm.naturalone.icu*.jar"/>
+      </fileset>
+  	</sort>
   </path>
   
   
@@ -430,6 +498,8 @@
   		      value="cache_${natural.ant.project.deploy.file.name.base}_${natural.ant.project.name}.properties"/>
   	<property name="natural.ant.project.timestamp.properties.file.name" 
   		      value="timestamp_${natural.ant.project.deploy.file.name.base}_${natural.ant.project.name}.properties"/>
+  	<property name="natural.ant.project.history.log.file.name" 
+  		      value="history_${natural.ant.project.deploy.file.name.base}_${natural.ant.project.name}.txt"/>
   </target>
 	
   <target name="-processBuild"
@@ -440,24 +510,42 @@
   	  <param name="message" value="start of build" />
   	</antcall>
   	
+    <patternset id="pattern.natural.sources">
+      <!-- define pattern for Natural sources -->
+      <include name="**/*"/>
+      <exclude name="**/.*"/>
+      <exclude name=".*/**"/>
+      <exclude name="**/.*/**"/>
+      <exclude name="**/cache_*.properties"/>
+      <exclude name="**/timestamp_*.properties"/>
+      <exclude name="**/history_*.txt"/>
+    </patternset>
+
+  	<!-- Template logic: DO NOT EDIT NOR REMOVE -->
+    <!-- ### ANT_DEPLOY_PROJECT_REFERENCES_ROOT_START ### -->
+    <!-- ### ANT_DEPLOY_PROJECT_REFERENCES_ROOT_END ### -->
+
 	<natantbuild>
 	  <projectfiles>
-	      <fileset dir="${natural.ant.project.rootdir.active}/${natural.ant.project.name}">
-	      <include name="**/*"/>
-	      <exclude name="**/.*"/>
-	      <exclude name=".*/**"/>
-	    </fileset>
+	    <fileset dir="${natural.ant.project.rootdir.active}/${natural.ant.project.name}">
+          <patternset refid="pattern.natural.sources"/>
+        </fileset>
+	    <!-- Template logic: DO NOT EDIT NOR REMOVE -->
+	    <!-- ### ANT_DEPLOY_PROJECT_FILES_START ### -->
+        <!-- ### ANT_DEPLOY_PROJECT_FILES_END ### -->
 	  </projectfiles>
 	  <changedfiles>
 	    <fileset dir="${natural.ant.project.rootdir.active}/${natural.ant.project.name}">
-	      <include name="**/*"/>
-	      <exclude name="**/.*"/>
-	      <exclude name=".*/**"/>
-	      <modified>
+          <patternset refid="pattern.natural.sources"/>
+	      <modified cacheclass="com.softwareag.naturalone.natural.ant.cache.NaturalPropertiesfileCache">
+	      	<classpath refid="natural.ant.searchpath"/>
 	      	<param name="update" value="${natural.ant.build.modified.update}"/>
 	      	<param name="cache.cachefile" value="${natural.ant.project.cache.properties.file.name}"/>
 	      </modified>
 	    </fileset>
+        <!-- Template logic: DO NOT EDIT NOR REMOVE -->
+        <!-- ### ANT_DEPLOY_CHANGED_FILES_START ### -->
+        <!-- ### ANT_DEPLOY_CHANGED_FILES_END ### -->
 	  </changedfiles>
 	  <specialfiles>
 	      <fileset dir="${natural.ant.project.rootdir.active}/${natural.ant.project.name}">
