@@ -2,7 +2,7 @@
 * :Mode S
 * :CP
 * <Natural Source Header
-* MAP2: PROTOTYPE VERSION 820 --- CREATED BY ONE 9.1.1 ---
+* MAP2: PROTOTYPE VERSION 820 --- CREATED BY ONE 9.1.2 ---
 * INPUT USING MAP 'XXXXXXXX'
 *     #CR-ED #CR-ET #CR-FROMH #CR-ID #CR-ID-CONTROL #CR-ID-IO #CR-P1W #CR-P2W
 *     #CR-P3W #CR-SD #CR-ST #CR-STATUS #CR-TOH #CR-YACHT-NAME
@@ -32,7 +32,7 @@ INPUT          (     IP=OFF                                           /*
 /
  002T *USER /*.02S008 A008 .
       (AD=OD HE='NCDEMAPH' )
- 024T 'Natural Class - Cruise Planning BRA___'(U)
+ 024T 'Natural Class - Cruise Planning BRASIL'(U)
  071T *TIMX /*.01S008 T    .
       (AD=OD HE='NCDEMAPH' )
 /
@@ -57,11 +57,11 @@ INPUT          (     IP=OFF                                           /*
 /
  018T #CR-SD /*.99U013 A013 .
       (AD=MIZ HE='NCDEMAPH' )
- 031T #CR-ST /*.99U007 A007 .
+ 032T #CR-ST /*.99U007 A007 .
       (AD=MIZ HE='NCDEMAPH' )
  040T #CR-ED /*.99U013 A013 .
       (AD=MIZ HE='NCDEMAPH' )
- 053T #CR-ET /*.99U007 A007 .
+ 054T #CR-ET /*.99U007 A007 .
       (AD=MIZ HE='NCDEMAPH' )
 /
  018T 'starting'(C)
