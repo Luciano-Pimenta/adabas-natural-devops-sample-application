@@ -75,7 +75,7 @@
     <property name="natural.ant.server.port" value="2700" />
     <property name="natural.ant.project.name" value="NaturalCruise" />
     <property name="natural.ant.server.secured.environment" value="NO" />
-    <property name="natural.ant.project.rootdir" value="/var/lib/jenkins/workspace" />
+    <property name="natural.ant.project.rootdir" value="." />
     <property name="natural.ant.deploy.stow" value="YES" />
     <property name="natural.ant.deploy.history.log.level" value="0" />
     <property name="natural.ant.deploy.upload.sysobjh.library" value="WORKPLAN" />
