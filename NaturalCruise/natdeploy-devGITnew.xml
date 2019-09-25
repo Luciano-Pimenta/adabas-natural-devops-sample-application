@@ -71,7 +71,7 @@
     <property name="natural.ant.truststore.password" value="" />
     <property name="natural.ant.deploy.upload" value="YES" />
     <property name="natural.ant.deploy.scratch" value="NO" />
-    <property name="natural.ant.repository.type" value="GIT" />
+    <property name="natural.ant.repository.type" value="SVN" />
     <property name="natural.ant.server.port" value="2700" />
     <property name="natural.ant.project.name" value="NaturalCruise" />
     <property name="natural.ant.server.secured.environment" value="NO" />
