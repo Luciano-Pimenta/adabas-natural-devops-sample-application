@@ -50,7 +50,7 @@
     <property environment="env"/>
     <property name="natural.ant.server.parameters" value="webio=on parm=NDVDEV" />
     <property name="natural.ant.repository.password" value="" />
-    <property name="natural.ant.project.password.encryption" value="YES" />
+    <property name="natural.ant.project.password.encryption" value="NO" />
     <property name="natural.ant.deploy.create.sysobjh" value="NO" />
     <property name="natural.ant.deploy.exclude.list" value="YES" />
     <property name="natural.ant.deploy.scope" value="2" />
@@ -94,7 +94,7 @@
     <property name="natural.ant.library.steplibs" value="NTCRUISE;0;!;!" />
     <property name="natural.ant.server.environment" value="127.0.0.1-2700" />
     <property name="natural.ant.server.usessl" value="NO" />
-    <property name="natural.ant.server.password" value="L4qfDPyI1s0=" />
+    <property name="natural.ant.server.password" value="" />
     <property name="natural.ant.server.username" value="CI-DEV" />
     <property name="natural.ant.project.steplib.nsv" value="" />
     <!-- ### ANT_DEPLOY_PROPERTIES_END ###   -->
